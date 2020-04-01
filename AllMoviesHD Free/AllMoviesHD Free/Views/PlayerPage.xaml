@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="clr-namespace:MoviesHD.Models"
+              xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             mc:Ignorable="d"
+             x:Class="MoviesHD.Views.PlayerPage" Title="{Binding title_en}">
+    <ContentPage.Content>
+        <Grid x:Name="ContentGrid" RowSpacing="0" x:FieldModifier="Public" >               
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="PlayerRow"/>
+                        <RowDefinition x:Name="DetailsRow"/>
+                        <RowDefinition x:Name="AdRow" Height="auto"/>
+            </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Margin="0">
+
+                        <model:ExoVideoPlayer x:Name="Player" BackgroundColor="Black" DoubleClick="Player_DoubleClick"
+                                              SeekProcessed="Player_SeekProcessed" PlayerError="Player_PlayerError" FullscreenToggled="FullScreenButtonClick">
+                        </model:ExoVideoPlayer>
+
+                        <busyindicator:SfBusyIndicator x:Name="bIndicator" IsBusy="{Binding Source={x:Reference Player},Path=State,Converter={StaticResource BufferingToBoolConverter}}" AnimationType="SingleCircle" IsVisible="{Binding Source={x:Reference Player},Path=State,Converter={StaticResource BufferingToBoolConverter}}" TextColor="{StaticResource TransparentBackground}"></busyindicator:SfBusyIndicator>
+                    </Grid>
+                    <Grid Grid.Row="1" x:Name="DetailsGrid">
+                        <ScrollView>
+                            <StackLayout Orientation="Vertical">
+                                <Grid  Margin="5" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition  Width="1*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Margin="5" Grid.Column="0" x:Name="ImageGrid">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="15"/>
+                                        </Grid.RowDefinitions>
+                                        <Image x:Name="HeaderImage" Grid.Row="0" Source="{Binding poster}"/>
+                                    </Grid>
+                                    <StackLayout Grid.Column="1" Margin="5" x:Name="DescriptionPanel" Orientation="Vertical">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Name:" TextColor="{StaticResource primary_text}"></Label>
+                                            <Label x:Name="NameTextBox" Text="{Binding title_en}" TextColor="{StaticResource secondary_text}" Margin="5,0,0,0"></Label>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Director:" TextColor="{StaticResource primary_text}" ></Label>
+                                            <Label Text="{Binding Directors}" TextColor="{StaticResource secondary_text}" Margin="5,0,0,0"></Label>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Release Date:" TextColor="{StaticResource primary_text}" ></Label>
+                                            <Label x:Name="YearTextBox" Text="{Binding releaseDate}" TextColor="{StaticResource secondary_text}" Margin="5,0,0,0"></Label>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="IMDb:" TextColor="{StaticResource primary_text}" ></Label>
+                                            <Label x:Name="ImdbTextBox" Text="{Binding imdb}" TextColor="{StaticResource secondary_text}" Margin="5,0,0,0"></Label>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Vertical">
+                                            <Label Text="Genres:" TextColor="{StaticResource primary_text}" ></Label>
+                                            <Label Text="{Binding Genres}"  TextColor="{StaticResource secondary_text}" Margin="5,0,0,0"></Label>
+                                        </StackLayout>
+
+
+                                        <StackLayout Orientation="Vertical">
+                                            <Label Text="Description:" TextColor="{StaticResource primary_text}" ></Label>
+                                            <Label TextColor="{StaticResource secondary_text}"  Text="{Binding DescriptionEng}"  Margin="5,0,0,0"></Label>
+                                        </StackLayout>
+
+                                    </StackLayout>
+                                </Grid>
+                                
+                                <xforms:SfListView ItemsSource="{Binding Seasons}" SelectionMode="Single" AutoFitMode="Height">
+                                <xforms:SfListView.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <Grid  BackgroundColor="#00000000">
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="SeasonTapped"></TapGestureRecognizer>
+                                                </Grid.GestureRecognizers>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Label Text="{Binding Number,StringFormat='Season {0}'}"></Label>
+                                            <xforms:SfListView Grid.Row="1" ItemsSource="{Binding Episodes}" SelectionMode="Single">
+                                                <xforms:SfListView.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Grid HorizontalOptions="StartAndExpand" Margin="30,0,0,0">
+                                                                <Grid.GestureRecognizers>
+                                                                    <TapGestureRecognizer Tapped="EpisodeTapped"></TapGestureRecognizer>
+                                                                </Grid.GestureRecognizers>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Text="{Binding Name}" Grid.Column="0" HorizontalOptions="StartAndExpand" VerticalOptions="Center" ></Label>
+                                                                <!--<Label Text="{Binding Quality}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                                                                <Label Text="{Binding Label}" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                                                                <Label Text="{Binding Extension}" Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                                                                <Label Text="{Binding Size,Converter={StaticResource SizeConverter}}" VerticalOptions="Center" Grid.Column="4"></Label>-->
+                                                               
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </xforms:SfListView.ItemTemplate>
+                                                </xforms:SfListView>
+                                        <busyindicator:SfBusyIndicator Grid.RowSpan="2" HorizontalOptions="StartAndExpand" IsBusy="{Binding Updating}" AnimationType="HorizontalPulsingBox" ></busyindicator:SfBusyIndicator>                                        
+                                            </Grid>
+
+                                        </DataTemplate>
+                                    </xforms:SfListView.ItemTemplate>
+                                </xforms:SfListView>
+
+                            </StackLayout>
+
+                        </ScrollView>
+                    </Grid>
+            <model:AdMobView x:Name="AdMobAdd" Margin="2" Grid.Row="2" AdUnitId="ca-app-pub-3909212246838265/3678963081" AdUnitWidth="320" AdUnitHeight="50" WidthRequest="320" HeightRequest="50" VerticalOptions="End" IsVisible="{Binding Source={x:Reference Player},Path=IsFullScreen,Converter={StaticResource NegativeBoolConverter}}"></model:AdMobView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

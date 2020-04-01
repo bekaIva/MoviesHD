@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:pulltorefresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             mc:Ignorable="d"
+             xmlns:model="clr-namespace:MoviesHD.Model"
+             xmlns:model1="clr-namespace:MoviesHD.Models"
+             x:Class="MoviesHD.Views.HomePage" Title="Home" BindingContext="{StaticResource MainViewModel}">
+    <ContentPage.Content>
+        <Grid>
+            <Grid x:Name="ContentGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="ContentRow"/>
+                <RowDefinition x:Name="BanerRow" Height="auto"/>
+            </Grid.RowDefinitions>
+            <pulltorefresh:SfPullToRefresh Grid.Row="0" x:Name="pullToRefresh" RefreshCommand="{Binding RefreshListing}" RefreshCommandParameter="{x:Reference pullToRefresh}">
+                <pulltorefresh:SfPullToRefresh.PullableContent>
+                    <ScrollView>
+                        <StackLayout>
+                            <Frame HasShadow="True" HeightRequest="300" Padding="0,10,10,10">
+                                <Grid Margin="4">
+                                    <StackLayout>
+                                        <Label Text="Featured" VerticalOptions="End"/>
+                                        <xforms:SfListView ItemTapped="MovieTapped" x:Name="FeaturedListView" ItemsSource="{Binding FeaturedResults}" ItemTemplate="{StaticResource itemsTemplate}" Orientation="Horizontal" SelectionMode="None" AutoFitMode="Height">
+                                            <xforms:SfListView.Behaviors>
+                                                <model:AnimatedItemListViewBehaviours></model:AnimatedItemListViewBehaviours>
+                                            </xforms:SfListView.Behaviors>
+                                        </xforms:SfListView>
+                                    </StackLayout>
+                                    <ActivityIndicator WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center" Color="{StaticResource primary_dark}" IsRunning="{Binding FeaturesLoading}"></ActivityIndicator>
+                                </Grid>
+                            </Frame>
+                            <Frame HasShadow="True" HeightRequest="300" Padding="0,10,10,10">
+                                <Grid Margin="4">
+                                    <StackLayout>
+                                        <Label Text="Top Movies" VerticalOptions="End"/>
+                                        <xforms:SfListView ItemTapped="MovieTapped" x:Name="TopMoviesListView" ItemsSource="{Binding TopMoviesResults}" ItemTemplate="{StaticResource itemsTemplate}" Orientation="Horizontal" SelectionMode="None" AutoFitMode="Height">
+                                            <xforms:SfListView.Behaviors>
+                                                <model:AnimatedItemListViewBehaviours></model:AnimatedItemListViewBehaviours>
+                                            </xforms:SfListView.Behaviors>
+                                        </xforms:SfListView>
+                                    </StackLayout>
+                                    <ActivityIndicator WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center" Color="{StaticResource primary_dark}" IsRunning="{Binding FeaturesLoading}"></ActivityIndicator>
+                                </Grid>
+                            </Frame>
+                            <Frame HasShadow="True" HeightRequest="300" Padding="0,10,10,10">
+                                <Grid Margin="4">
+                                    <StackLayout>
+                                        <Label Text="Premiere" VerticalOptions="End"/>
+                                        <xforms:SfListView ItemTapped="MovieTapped" x:Name="PremiereListView" ItemsSource="{Binding PremiereResults}" ItemTemplate="{StaticResource itemsTemplate}" Orientation="Horizontal" SelectionMode="None" AutoFitMode="Height">
+                                            <xforms:SfListView.Behaviors>
+                                                <model:AnimatedItemListViewBehaviours></model:AnimatedItemListViewBehaviours>
+                                            </xforms:SfListView.Behaviors>
+                                        </xforms:SfListView>
+                                    </StackLayout>
+                                    <ActivityIndicator WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center" Color="{StaticResource primary_dark}" IsRunning="{Binding FeaturesLoading}"></ActivityIndicator>
+                                </Grid>
+                            </Frame>
+                            <Frame HasShadow="True" HeightRequest="300" Padding="0,10,10,10">
+                                <Grid Margin="4">
+                                    <StackLayout>
+                                        <Label Text="Last Added" VerticalOptions="End"/>
+                                        <xforms:SfListView ItemTapped="MovieTapped" x:Name="LastAddedListView" ItemsSource="{Binding LastAddedResults}" ItemTemplate="{StaticResource itemsTemplate}" Orientation="Horizontal" SelectionMode="None" AutoFitMode="Height">
+                                            <xforms:SfListView.Behaviors>
+                                                <model:AnimatedItemListViewBehaviours></model:AnimatedItemListViewBehaviours>
+                                            </xforms:SfListView.Behaviors>
+                                        </xforms:SfListView>
+                                    </StackLayout>
+                                    <ActivityIndicator WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center" Color="{StaticResource primary_dark}" IsRunning="{Binding FeaturesLoading}"></ActivityIndicator>
+                                </Grid>
+                            </Frame>
+                            <Frame HasShadow="True" HeightRequest="300" Padding="0,10,10,10">
+                                <Grid Margin="4">
+                                    <StackLayout>
+                                        <Label Text="New Episodes" VerticalOptions="End"/>
+                                        <xforms:SfListView ItemTapped="MovieTapped" x:Name="NewEpisodesListView" ItemsSource="{Binding NewEpisodesResults}" ItemTemplate="{StaticResource itemsTemplate}" Orientation="Horizontal" SelectionMode="None" AutoFitMode="Height">
+                                            <xforms:SfListView.Behaviors>
+                                                <model:AnimatedItemListViewBehaviours></model:AnimatedItemListViewBehaviours>
+                                            </xforms:SfListView.Behaviors>
+                                        </xforms:SfListView>
+                                    </StackLayout>
+                                    <ActivityIndicator WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center" Color="{StaticResource primary_dark}" IsRunning="{Binding FeaturesLoading}"></ActivityIndicator>
+                                </Grid>
+                            </Frame>
+                            <Frame HasShadow="True" HeightRequest="300" Padding="0,10,10,10">
+                                <Grid Margin="4">
+                                    <StackLayout>
+                                        <Label Text="Top TV-Shows" VerticalOptions="End"/>
+                                        <xforms:SfListView ItemTapped="MovieTapped" x:Name="TopTVShowsListView" ItemsSource="{Binding TopTVShowsResults}" ItemTemplate="{StaticResource itemsTemplate}" Orientation="Horizontal" SelectionMode="None" AutoFitMode="Height">
+                                            <xforms:SfListView.Behaviors>
+                                                <model:AnimatedItemListViewBehaviours></model:AnimatedItemListViewBehaviours>
+                                            </xforms:SfListView.Behaviors>
+                                        </xforms:SfListView>
+                                    </StackLayout>
+                                    <ActivityIndicator WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center" Color="{StaticResource primary_dark}" IsRunning="{Binding FeaturesLoading}"></ActivityIndicator>
+                                </Grid>
+                            </Frame>
+                        </StackLayout>
+                    </ScrollView>
+                </pulltorefresh:SfPullToRefresh.PullableContent>
+            </pulltorefresh:SfPullToRefresh>
+            <!--<model1:IronSourceBanner x:Name="isBanner" Grid.Row="0" Grid.RowSpan="2" BanerAdLoaded="BanerLoaded" BanerAdLoadFailed="BanerLoadFailed" WidthRequest="330" HeightRequest="60" VerticalOptions="End"></model1:IronSourceBanner>-->
+                <model1:AdMobView x:Name="AdMobAdd" Grid.Row="1" AdUnitId="ca-app-pub-3909212246838265/3678963081" AdUnitWidth="320" AdUnitHeight="50" WidthRequest="320" HeightRequest="50" VerticalOptions="End"></model1:AdMobView>
+            </Grid>
+            
+        </Grid>
+        
+                   
+       
+    </ContentPage.Content>
+</ContentPage>

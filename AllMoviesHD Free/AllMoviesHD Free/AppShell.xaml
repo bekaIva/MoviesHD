@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       mc:Ignorable="d"
+       xmlns:models="clr-namespace:MoviesHD.Models"
+       xmlns:local="clr-namespace:MoviesHD.Views"
+       Title="MoviesHD"
+       x:Class="MoviesHD.AppShell">
+    <Shell.FlyoutHeader>
+        <Grid HeightRequest="60" BackgroundColor="{StaticResource icons}">
+            <Image Source="iconLabel" Margin="12"></Image>
+            <!--<Label Text="AllMoviesHD" FontSize="24" VerticalOptions="Center"  HorizontalOptions="Center" TextColor="{StaticResource primary_light}">
+                <Label.Effects>
+                    <models:ShadowEffect Radius="7" DistanceX="8" DistanceY="8" Color="{StaticResource primary_dark}">
+                       
+                    </models:ShadowEffect>
+                </Label.Effects>
+            </Label>-->
+        </Grid>
+    </Shell.FlyoutHeader>
+    <!-- Your Pages -->
+    <FlyoutItem Title="Home">
+        <FlyoutItem.FlyoutIcon>
+            <FontImageSource Color="{StaticResource primary_text}" FontFamily="{StaticResource FontAwesome5ProLight}"  Glyph="&#xf015;"></FontImageSource>
+        </FlyoutItem.FlyoutIcon>
+        <ShellContent ContentTemplate="{DataTemplate local:HomePage}" />     
+    </FlyoutItem>
+    <FlyoutItem Title="Search">
+        <FlyoutItem.FlyoutIcon>
+            <FontImageSource Color="{StaticResource primary_text}" FontFamily="{StaticResource FontAwesome5ProLight}"  Glyph="&#xf002;"></FontImageSource>
+        </FlyoutItem.FlyoutIcon>
+        <ShellContent ContentTemplate="{DataTemplate local:SearchPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Policy">
+        <FlyoutItem.FlyoutIcon>
+            <FontImageSource Color="{StaticResource primary_text}" FontFamily="{StaticResource FontAwesome5ProLight}"  Glyph="&#xf570;"></FontImageSource>
+        </FlyoutItem.FlyoutIcon>
+        <ShellContent ContentTemplate="{DataTemplate local:PolicyPage}" />
+    </FlyoutItem>
+</Shell>

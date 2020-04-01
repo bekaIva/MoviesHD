@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:range="clr-namespace:Syncfusion.SfRangeSlider.XForms;assembly=Syncfusion.SfRangeSlider.XForms"
+             xmlns:models="clr-namespace:MoviesHD.Models"
+             xmlns:syncfusionButtons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:syncfusionlistview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:contentviews="clr-namespace:MoviesHD.Views.ContentViews"
+             xmlns:model="clr-namespace:MoviesHD.Model"
+             x:Class="MoviesHD.Views.SearchPage" BindingContext="{StaticResource MainViewModel}" x:Name="searchPage">
+    <Shell.SearchHandler>
+        <models:MovieSearchHandler CurrentPage="{x:Reference searchPage}" ViewModel="{StaticResource MainViewModel}" Query="{Binding SearchQuery,Mode=TwoWay}" Placeholder="Search">
+            <models:MovieSearchHandler.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding poster}" WidthRequest="50" HeightRequest="70" Aspect="AspectFill"></Image>
+                        <Label Grid.Column="1" Text="{Binding title_en}" VerticalOptions="Center" ></Label>
+                    </Grid>
+                </DataTemplate>
+            </models:MovieSearchHandler.ItemTemplate>
+        </models:MovieSearchHandler>
+    </Shell.SearchHandler>
+    <ContentPage.Content>
+        <Grid>
+            <Grid x:Name="ContentGrid" VerticalOptions="StartAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="ContentRow"/>
+                <RowDefinition x:Name="BanerRow" Height="auto"/>
+            </Grid.RowDefinitions>
+            <ScrollView Grid.Row="0" VerticalOptions="StartAndExpand">
+                <Grid VerticalOptions="Start">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Frame Margin="4" Grid.Row="0" HasShadow="True" Padding="4">
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <StackLayout Grid.Row="0" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalOptions="Start"  VerticalOptions="Center">
+                                <Label Text="{Binding IsTVShow,Converter={StaticResource IsTvShowToBoolConverter}}" VerticalOptions="Center"></Label>
+                                <Switch IsToggled="{Binding IsTVShow,Mode=TwoWay}" >
+
+                                </Switch>
+                            </StackLayout>
+
+                            <syncfusionButtons:SfCheckBox Grid.Column="0" Grid.Row="1" Text="Rating" IsVisible="{Binding IsTVShow,Converter={StaticResource NegativeBoolConverter}}" IsChecked="{Binding IsRatingEnabled,Mode=TwoWay}"></syncfusionButtons:SfCheckBox>
+                            <syncfusionButtons:SfCheckBox Grid.Column="1" Grid.Row="1" Text="Country" IsChecked="{Binding IsCountryEnabled,Mode=TwoWay}"></syncfusionButtons:SfCheckBox>
+                            <syncfusionButtons:SfCheckBox Grid.Column="2" Grid.Row="1" Text="Date" IsChecked="{Binding IsDateEnabled,Mode=TwoWay}"></syncfusionButtons:SfCheckBox>
+                            <syncfusionButtons:SfCheckBox Grid.Column="3" Grid.Row="1" Text="Genre" IsChecked="{Binding IsGenreEnabled,Mode=TwoWay}"></syncfusionButtons:SfCheckBox>
+                        </Grid>
+                    </Frame>
+
+                    <StackLayout Orientation="Vertical" Grid.Row="1">
+                        <Grid VerticalOptions="Start" IsVisible="{Binding IsGenreEnabled}">
+                            <syncfusionlistview:SfListView Orientation="Horizontal" ItemsSource="{Binding Genres}" HeightRequest="60" ItemSize="100">
+                                <syncfusionlistview:SfListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <syncfusionButtons:SfCheckBox IsChecked="{Binding IsChecked,Mode=TwoWay}" StateChanged="GenreCheckboxChanged" Text="{Binding Genre}"></syncfusionButtons:SfCheckBox>
+                                        </Grid>
+                                    </DataTemplate>
+                                </syncfusionlistview:SfListView.ItemTemplate>
+                            </syncfusionlistview:SfListView>
+                        </Grid>
+                        <Grid x:Name="RatingGrid" IsVisible="{Binding IsRatingEnabled}">
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="IMDb" VerticalTextAlignment="End"></Label>
+                                <range:SfRangeSlider RangeChanging="RatingSliderChanging" HeightRequest="70"  ShowValueLabel="True" LabelPlacement="TopLeft" RangeStart="{Binding ImdbFilterStart,Mode=TwoWay}" RangeEnd="{Binding ImdbFilterEnd,Mode=TwoWay}" VerticalOptions="Start" ShowRange="True" Minimum="1" Maximum="10" StepFrequency="1" Orientation="Horizontal">
+
+                                </range:SfRangeSlider>
+                            </StackLayout>
+
+                        </Grid>
+                        <Grid x:Name="CountryGrid" IsVisible="{Binding IsCountryEnabled}" VerticalOptions="Start">
+                            <syncfusionlistview:SfListView ItemsSource="{Binding Countries}" HeightRequest="60" ItemSize="100" Orientation="Horizontal" VerticalOptions="Start">
+                                <syncfusionlistview:SfListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid VerticalOptions="Start">
+                                            <syncfusionButtons:SfCheckBox StateChanged="CountryCheckboxChanged" Text="{Binding Name}" IsChecked="{Binding IsSelected,Mode=TwoWay}"></syncfusionButtons:SfCheckBox>
+                                        </Grid>
+                                    </DataTemplate>
+                                </syncfusionlistview:SfListView.ItemTemplate>
+                            </syncfusionlistview:SfListView>
+                        </Grid>
+                        <Grid x:Name="DateGrid" IsVisible="{Binding IsDateEnabled}">
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="Year" VerticalTextAlignment="End"></Label>
+                                <range:SfRangeSlider RangeChanging="DateSliderChanging" HeightRequest="70"  ShowValueLabel="True" LabelPlacement="TopLeft" RangeStart="{Binding DateFilterStart,Mode=TwoWay}" RangeEnd="{Binding DateFilterEnd,Mode=TwoWay}" VerticalOptions="Start" ShowRange="True" Minimum="1900" Maximum="2018" StepFrequency="1" Orientation="Horizontal">
+
+                                </range:SfRangeSlider>
+                            </StackLayout>
+                        </Grid>
+
+                    </StackLayout>
+                    <Grid Grid.Row="2">
+                        <Frame Margin="4" HasShadow="True">
+                            <Grid>
+                                <syncfusionlistview:SfListView x:Name="ResultsListview" ItemTapped="MovieItemTapped" Loaded="ResultsListview_Loaded" ItemSpacing="3" Margin="4" AutoFitMode="Height" LoadMoreOption="Auto" LoadMorePosition="Bottom" IsBusy="{Binding SContext.IsBusy}" ItemsSource="{Binding SContext.Results}" LoadMoreCommand="{Binding LoadMoreCommand}" LoadMoreCommandParameter="{x:Reference ResultsListview}">
+                                    <syncfusionlistview:SfListView.LayoutManager>
+                                        <syncfusionlistview:GridLayout SpanCount="3"></syncfusionlistview:GridLayout>
+                                    </syncfusionlistview:SfListView.LayoutManager>
+                                    <syncfusionlistview:SfListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <contentviews:SearchItemView></contentviews:SearchItemView>
+                                        </DataTemplate>
+                                    </syncfusionlistview:SfListView.ItemTemplate>
+                                    <syncfusionlistview:SfListView.Behaviors>
+                                        <model:AnimatedItemListViewBehaviours></model:AnimatedItemListViewBehaviours>
+                                    </syncfusionlistview:SfListView.Behaviors>
+                                </syncfusionlistview:SfListView>
+                                <Label Text="Nothing found!" IsVisible="{Binding Nothingfound}" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                            </Grid>
+
+                        </Frame>
+
+                    </Grid>
+                </Grid>
+            </ScrollView>
+            <!--<models:IronSourceBanner x:Name="isBanner" Grid.Row="0" Grid.RowSpan="2" BanerAdLoaded="BanerLoaded" BanerAdLoadFailed="BanerLoadFailed"  WidthRequest="330" HeightRequest="60" VerticalOptions="End"></models:IronSourceBanner>-->
+                <models:AdMobView Grid.Row="1" x:Name="AdMobAdd" AdUnitId="ca-app-pub-3909212246838265/3678963081" AdUnitWidth="320" AdUnitHeight="50" WidthRequest="320" HeightRequest="50" VerticalOptions="End"></models:AdMobView>
+            </Grid>            
+        </Grid>
+        
+    </ContentPage.Content>
+</ContentPage>

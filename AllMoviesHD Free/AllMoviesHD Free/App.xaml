@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="clr-namespace:MoviesHD.Model"
+             mc:Ignorable="d"
+             xmlns:MainViewModel="clr-namespace:MoviesHD.ViewModel"
+             x:Class="MoviesHD.App">
+    <Application.Resources>
+
+        <MainViewModel:MainViewModel x:Key="MainViewModel"></MainViewModel:MainViewModel>
+        <model:IsTvShowToBoolConverter x:Key="IsTvShowToBoolConverter"></model:IsTvShowToBoolConverter>
+        <model:NegativeBoolConverter x:Key="NegativeBoolConverter"></model:NegativeBoolConverter>
+        <model:StringFormatConverter x:Key="StringFormatConverter"></model:StringFormatConverter>
+        <model:BufferingToBoolConverter x:Key="BufferingToBoolConverter"></model:BufferingToBoolConverter>
+        <model:BytesToKMG x:Key="SizeConverter"></model:BytesToKMG>
+        <Color x:Key="primary">#FF5722</Color>
+        <Color x:Key="primary_dark">#E64A19</Color>
+        <Color x:Key="primary_light">#FFCCBC</Color>
+        <Color x:Key="accent">#FF9800</Color>
+        <Color x:Key="primary_text">#212121</Color>
+        <Color x:Key="secondary_text">#757575</Color>
+        <Color x:Key="icons">#FFFFFF</Color>
+        <Color x:Key="divider">#BDBDBD</Color>
+
+        <Color x:Key="TransparentBackground">#7FE4E4E4</Color>
+        <Style x:Key="BaseStyle" TargetType="Element">
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource primary}" />
+            <Setter Property="Shell.ForegroundColor" Value="White" />
+            <Setter Property="Shell.TitleColor" Value="White" />
+            <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+            <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+            <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource primary}" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF"/>
+            <Setter Property="Shell.TabBarTitleColor" Value="Yellow"/>
+
+
+        </Style>
+        <Style TargetType="FlyoutItem">
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource primary}"/>
+        </Style>
+        <Style TargetType="Tab" BasedOn="{StaticResource BaseStyle}" />
+
+        <DataTemplate x:Key="itemsTemplate">
+         
+               
+                    <Grid WidthRequest="150" Margin="5" BackgroundColor="#00000000">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="225"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" Source="{Binding poster}" Aspect="Fill" x:Name="CoverImage"></Image>
+                <Grid BackgroundColor="#7F000000" HeightRequest="50" HorizontalOptions="Fill" VerticalOptions="End" Grid.Row="0">
+                            <StackLayout Orientation="Vertical">
+                        <Label Margin="1" HorizontalOptions="Start" TextColor="{StaticResource icons}"  Text="{Binding imdb}"></Label>
+                                <Grid HorizontalOptions="Fill">
+                            <Label Margin="1" TextColor="{StaticResource icons}" HorizontalOptions="Start" Text="{Binding releaseDate}"></Label>
+                                </Grid>
+                            </StackLayout>
+                        </Grid>
+                        <Label Grid.Row="1" WidthRequest="150" HeightRequest="60" TextColor="{StaticResource primary_text}" VerticalOptions="Center" HorizontalOptions="Center"  Text="{Binding title_en}"></Label>
+                    </Grid>
+             
+
+            
+        </DataTemplate>
+
+        <OnPlatform x:TypeArguments="x:String" 
+                x:Key="FontAwesomeBrands">
+            <On Platform="Android" 
+          Value="Font Awesome 5 Brands-Regular-400.otf#Regular" />
+        </OnPlatform>
+
+        <OnPlatform x:TypeArguments="x:String" 
+                x:Key="FontAwesome5ProSolid">
+            <On Platform="Android" 
+          Value="Font Awesome 5 Pro-Solid-900.otf#Solid" />
+        </OnPlatform>
+
+        <OnPlatform x:TypeArguments="x:String" 
+                x:Key="FontAwesome5ProRegular">
+            <On Platform="Android" 
+          Value="Font Awesome 5 Pro-Regular-400.otf#Regular" />
+        </OnPlatform>
+
+        <OnPlatform x:TypeArguments="x:String" 
+                x:Key="FontAwesome5ProLight">
+            <On Platform="Android" 
+          Value="Font Awesome 5 Pro-Light-300.otf#Light"  />
+        </OnPlatform>
+        <OnPlatform x:TypeArguments="x:String" 
+                x:Key="FontAwesome5DuotoneSolid">
+            <On Platform="Android" 
+          Value="Font Awesome 5 Duotone-Solid-900.otf#DoutoneSolid"/>
+        </OnPlatform>
+    </Application.Resources>
+</Application>

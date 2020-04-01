@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MoviesHD.Views.ContentViews.SearchItemView">
+  <ContentView.Content>
+        <Grid WidthRequest="150" Margin="5" BackgroundColor="#00000000">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="180"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Source="{Binding poster}" Aspect="Fill" x:Name="CoverImage"></Image>
+            <Grid BackgroundColor="#7F000000" HeightRequest="50" HorizontalOptions="Fill" VerticalOptions="End" Grid.Row="0">
+                <StackLayout Orientation="Vertical">
+                    <Label Margin="1" HorizontalOptions="Start" TextColor="{StaticResource icons}"  Text="{Binding imdb}"></Label>
+                    <Grid HorizontalOptions="Fill">
+                        <Label Margin="1" TextColor="{StaticResource icons}" HorizontalOptions="Start" Text="{Binding releaseDate}"></Label>
+                    </Grid>
+                </StackLayout>
+            </Grid>
+            <Label Grid.Row="1" WidthRequest="150" HeightRequest="60" TextColor="{StaticResource primary_text}" VerticalOptions="Center" HorizontalOptions="Center"  Text="{Binding title_en}"></Label>
+        </Grid>
+    </ContentView.Content>
+</ContentView>
