@@ -57,13 +57,18 @@ namespace MoviesHD.Views
                 ts = new CancellationTokenSource();
                 mBase.Updating = true;
                 await mvm.UpdateMovie(mBase, ts.Token);
+
                 if (!((mvm?.Interstitial?.IsLoading() ?? true) || (mvm?.Interstitial?.IsLoaded() ?? true)))
                 {
-                    mvm?.Interstitial?.Load();
+                    mvm?.Interstitial?.Load();                 
                 }
                 else
                 {
 
+                }
+                if (mvm?.Interstitial?.IsLoaded() ?? false)
+                {
+                    mvm?.Interstitial.Show();
                 }
                 if (mBase.Seasons.Count == 0) throw new Exception("Couldn't retrieve streams!");
                 StartupPlay();

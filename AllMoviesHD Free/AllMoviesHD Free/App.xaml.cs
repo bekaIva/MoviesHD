@@ -18,7 +18,7 @@ namespace MoviesHD
         public App()
         {
             Xamarin.Forms.Internals.Log.Listeners.Add(new DelegateLogListener((arg1, arg2) => Debug.WriteLine(arg2)));
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjEzMDI1QDMxMzcyZTM0MmUzMERNMzFIVVQ3WXE1SlBid3g3OVJ5N1NqRDhBUDFwT1hUVCtkR1ppcmlZRk09");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mjc1NTQ1QDMxMzgyZTMxMmUzMEV6cVlSTlZzSkwyM0piWFAvSWc5U3JLdjQrS3RrNjAxUEpXdjJPeDBZRGc9");
             InitializeComponent();
 
             MainPage = new AppShell();

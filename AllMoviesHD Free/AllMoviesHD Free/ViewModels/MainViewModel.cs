@@ -303,10 +303,7 @@ namespace MoviesHD.ViewModel
         #region Methods
         private void Interstitial_AdLoaded()
         {
-            if (Interstitial?.IsLoaded() ?? false)
-            {
-                Interstitial.Show();
-            }
+            
         }
         public async Task<List<Movie>> SearchQuick(CancellationToken token)
         {

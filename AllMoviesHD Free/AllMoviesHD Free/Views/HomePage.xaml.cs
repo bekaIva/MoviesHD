@@ -27,6 +27,14 @@ namespace MoviesHD.Views
         }
         protected override void OnAppearing()
         {
+            try
+            {
+                if (!((mainviewmodel?.Interstitial?.IsLoading() ?? true) || (mainviewmodel?.Interstitial?.IsLoaded() ?? true)))
+                {
+                    mainviewmodel?.Interstitial?.Load();
+                }
+            }
+            catch { }
             base.OnAppearing();
         }
         private async void MovieTapped(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
